@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
-import { FaUserPlus, FaInfoCircle, FaUserFriends, FaHandshake } from 'react-icons/fa';
+import { FaUserPlus, FaInfoCircle, FaUserFriends, FaHandshake,  } from 'react-icons/fa';
+import image3 from './images/image3-transformed.jpeg';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 // Scroll function for smooth scrolling
 const scrollToSection = (sectionId) => {
@@ -105,35 +108,47 @@ const Navbar = () => {
     </nav>
   );
 };
-
 const Hero = () => (
-  <div className="relative flex flex-col md:flex-row h-[600px] bg-pink-200 pt-[64px]" id="home">
-    <div className="absolute inset-0 bg-gradient from-maroon-200 to-white"></div>
-    <div className="flex-1 flex items-center justify-center z-10">
-      <div className="container mx-auto px-6 flex flex-col items-start text-left">
-        <h1 className="text-5xl font-bold text-black mb-4">Find Your Life Partner</h1>
-        <p className="text-lg text-black mb-6">
-          Join us to find your perfect match, because love knows no boundaries!
-        </p>
-        <p className="text-lg text-black mb-6">
-          At VivahBandh, we believe that every individual deserves to find a companion who complements their life.
-          Our extensive database of verified profiles makes it easier for you to explore potential matches based on your preferences.
-        </p>
-        <p className="text-lg text-black mb-6">
-          With our user-friendly platform, you can navigate through profiles effortlessly and discover connections that could lead to a beautiful journey of love.
-        </p>
-        <a href="/register" className="bg-maroon-600 font-bold text-white px-6 py-3 rounded-full hover:bg-pink-500 transition duration-300">
-          Get Started
-        </a>
+  <div className="relative flex items-center h-[770px] bg-pink-200 pt-[64px]" id="home">
+    {/* Image Background */}
+    <div className="absolute inset-0 overflow-hidden">
+      <img
+        src={image3}
+        alt="Indian Wedding Ceremony"
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-maroon-600 to-transparent opacity-70"></div>
+      
+      {/* Bottom Wave Shape */}
+      <div className="absolute bottom-0 w-full overflow-hidden leading-[0]">
+        <svg
+          className="relative block w-full h-[80px]"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          fill="#FEE2E2"  // Matching the pink background color
+        >
+          <path d="M0,0 C600,80 600,80 1200,0 L1200,120 L0,120 Z"></path>
+        </svg>
       </div>
     </div>
-    {/* Image Block */}
-    <div className="flex-1 flex my-2 justify-center items-center z-0">
-      <img
-        src="https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        alt="Indian Wedding Ceremony"
-        className="w-[750px] h-[500px] object-cover rounded-md"
-      />
+
+    {/* Text Content */}
+    <div className="relative z-10 max-w-lg text-white ml-[150px]">
+      <h3 className="text-3xl font-bold mb-4">Find Your</h3>
+      <h1 className="text-5xl font-bold mb-4">Life Partner</h1>
+      <p className="text-lg mb-6">
+        Join us to find your perfect match, because love knows no boundaries!
+      </p>
+      <p className="text-lg mb-6">
+        At VivahBandh, we believe that every individual deserves to find a companion who complements their life.
+      </p>
+      <a
+        href="/register"
+        className="bg-maroon-600 font-bold text-white px-6 py-3 rounded-full hover:bg-pink-500 transition duration-300"
+      >
+        Get Started
+      </a>
     </div>
   </div>
 );
@@ -142,9 +157,16 @@ const Hero = () => (
 const Welcome = () => (
   <div className="container mx-auto px-6 py-12 bg-pink-200" id="welcome">
     <div className="flex flex-wrap items-center">
-      <div className="flex-1 flex my-2 justify-center items-center z-0">
-        <div className="bg-gradient-to-r from-maroon-600 to-maroon-800 w-[600px] h-[500px] rounded-md"></div>
+      {/* Left Image */}
+      <div className="flex-1 flex flex-col items-center my-2 justify-center z-0">
+        <img 
+          src="https://i.pinimg.com/736x/4c/00/36/4c00363e9a49f10eeaa584ddaf45da11.jpg" 
+          alt="Happy Couple" 
+          className="w-[500px] h-[500px] rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl rounded-br-3xl object-cover mb-6" 
+        />
       </div>
+
+      {/* Text Section */}
       <div className="w-full md:w-1/2 md:pl-8">
         <h2 className="text-4xl font-bold mb-4">Welcome To <span className="text-maroon-600">VivahBandh.</span></h2>
         <p className="mb-4">We connect individuals seeking life partners, ensuring they find their perfect match among millions of verified profiles.</p>
@@ -169,6 +191,7 @@ const Welcome = () => (
     </div>
   </div>
 );
+
 
 const AboutUs = () => (
   <div className="container mx-auto px-6 py-16 bg-pink-200" id="about-us">
@@ -357,12 +380,88 @@ const Contact = () => (
 );
 
 const Footer = () => (
-  <footer className="bg-gradient-to-r from-maroon-600 to-gray-800 font-semibold text-white py-4">
-    <div className="container mx-auto text-center">
-      <p>© 2024 VivahBandh. All rights reserved.</p>
+  <footer className="relative bg-pink-500 text-white pt-24 pb-10 overflow-hidden">
+    {/* Curved Background Shape */}
+    <div className="absolute inset-0">
+      <div className="absolute -top-24 left-0 w-1/2 h-64 bg-pink-500 rounded-full"></div>
+      <div className="absolute -top-24 right-0 w-1/2 h-64 bg-pink-500 rounded-full transform rotate-180"></div>
+    </div>
+
+    {/* Inverted Wave Shape at Top */}
+    <div className="absolute top-0 w-full overflow-hidden leading-[0]">
+      <svg
+        className="relative block w-full h-[80px]"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+        fill="#FEE2E2"
+      >
+        <path d="M0,120 C600,40 600,40 1200,120 L1200,0 L0,0 Z"></path>
+      </svg>
+    </div>
+
+    <div className="relative container mx-auto px-4 md:flex md:justify-between md:text-left text-center space-y-8 md:space-y-0">
+      {/* WP Matrimony Section */}
+      <div className="md:w-1/4">
+        <h2 className="text-3xl font-bold mb-3">WP Matrimony</h2>
+        <p className="text-sm mb-4 max-w-xs">
+          WP Matrimony helps you find your perfect soulmate. Join today and start searching for your partner right away.
+        </p>
+        <div className="flex justify-center md:justify-start space-x-4 mt-4">
+          <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-facebook"></i></a>
+          <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-twitter"></i></a>
+          <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-youtube"></i></a>
+          <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-rss"></i></a>
+        </div>
+      </div>
+
+      {/* Quick Links */}
+      <div className="md:w-1/4">
+        <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
+        <ul className="text-sm space-y-2">
+          <li><a href="#" className="hover:underline">Testimonials</a></li>
+          <li><a href="#" className="hover:underline">Blog</a></li>
+          <li><a href="#" className="hover:underline">Contact Us</a></li>
+        </ul>
+      </div>
+
+      {/* Contact Details */}
+      <div className="md:w-1/4">
+        <h3 className="text-lg font-semibold mb-3">Contact Details</h3>
+        <ul className="text-sm space-y-2">
+          <li><i className="fas fa-map-marker-alt mr-2"></i> Sunset Lake Road, Suite B-2, Newark, Delaware -19702, USA</li>
+          <li><i className="fas fa-envelope mr-2"></i> presale@wpdating.com</li>
+          <li><i className="fas fa-phone-alt mr-2"></i> +1 217 650 2736</li>
+        </ul>
+      </div>
+
+      {/* Subscribe To Newsletter */}
+      <div className="md:w-1/4">
+        <h3 className="text-lg font-semibold mb-3">Subscribe To Newsletter</h3>
+        <p className="text-sm mb-4 max-w-xs">
+          Be the first one to know about our new features, updates, and many more.
+        </p>
+        <div className="flex">
+          <input type="email" placeholder="Email Address" className="p-2 w-full rounded-l-md text-gray-800" />
+          <button className="bg-white text-pink-600 px-4 rounded-r-md">
+            <i className="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {/* Footer Bottom */}
+    <div className="mt-12 border-t border-pink-400 pt-6 text-center text-sm">
+      <p>Copyright © 2024 Relish Dating. All rights reserved.</p>
+      <div className="flex justify-center space-x-4 mt-2">
+        <a href="#" className="hover:underline">FAQ</a>
+        <a href="#" className="hover:underline">Privacy Policy</a>
+        <a href="#" className="hover:underline">Terms & Conditions</a>
+      </div>
     </div>
   </footer>
 );
+
 
 const App = () => (
   <motion.div

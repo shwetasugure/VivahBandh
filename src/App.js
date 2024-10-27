@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
-import { FaUserPlus, FaInfoCircle, FaUserFriends, FaHandshake,  } from 'react-icons/fa';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { FaUserPlus, FaInfoCircle, FaUserFriends, FaHandshake, } from 'react-icons/fa';
 import image3 from './images/image3-transformed.jpeg';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import './App.css';
 
 
 // Scroll function for smooth scrolling
@@ -12,6 +14,7 @@ const scrollToSection = (sectionId) => {
     section.scrollIntoView({ behavior: 'smooth' });
   }
 };
+
 
 const HorizontalLine = () => (
   <div className="border-t border-maroon-600 my-8 h-1" />
@@ -108,17 +111,18 @@ const Navbar = () => {
     </nav>
   );
 };
+
 const Hero = () => (
-  <div className="relative flex items-center h-[770px] bg-pink-200 pt-[64px]" id="home">
+  <div className="relative flex items-center min-h-screen bg-pink-200 pt-[64px] md:pt-[64px]" id="home">
     {/* Image Background */}
     <div className="absolute inset-0 overflow-hidden">
       <img
         src={image3}
         alt="Indian Wedding Ceremony"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover" // Ensures the image covers the entire area
       />
       <div className="absolute inset-0 bg-gradient-to-r from-maroon-600 to-transparent opacity-70"></div>
-      
+
       {/* Bottom Wave Shape */}
       <div className="absolute bottom-0 w-full overflow-hidden leading-[0]">
         <svg
@@ -126,7 +130,7 @@ const Hero = () => (
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
-          fill="#FEE2E2"  // Matching the pink background color
+          fill="#FEE2E2" // Matching the pink background color
         >
           <path d="M0,0 C600,80 600,80 1200,0 L1200,120 L0,120 Z"></path>
         </svg>
@@ -134,13 +138,13 @@ const Hero = () => (
     </div>
 
     {/* Text Content */}
-    <div className="relative z-10 max-w-lg text-white ml-[150px]">
-      <h3 className="text-3xl font-bold mb-4">Find Your</h3>
-      <h1 className="text-5xl font-bold mb-4">Life Partner</h1>
-      <p className="text-lg mb-6">
+    <div className="relative z-10 max-w-lg text-white mx-auto text-center px-4 md:ml-[150px]">
+      <h3 className="text-2xl md:text-3xl font-bold mb-4">Find Your</h3>
+      <h1 className="text-4xl md:text-5xl font-bold mb-4">Life Partner</h1>
+      <p className="text-base md:text-lg mb-6">
         Join us to find your perfect match, because love knows no boundaries!
       </p>
-      <p className="text-lg mb-6">
+      <p className="text-base md:text-lg mb-6">
         At VivahBandh, we believe that every individual deserves to find a companion who complements their life.
       </p>
       <a
@@ -153,45 +157,71 @@ const Hero = () => (
   </div>
 );
 
+const Welcome = () => {
+  const { ref: imageInViewRef, inView: imageInView } = useInView({ threshold: 0.3 });
+  const { ref: textInViewRef, inView: textInView } = useInView({ threshold: 0.3 });
 
-const Welcome = () => (
-  <div className="container mx-auto px-6 py-12 bg-pink-200" id="welcome">
-    <div className="flex flex-wrap items-center">
-      {/* Left Image */}
-      <div className="flex-1 flex flex-col items-center my-2 justify-center z-0">
-        <img 
-          src="https://i.pinimg.com/736x/4c/00/36/4c00363e9a49f10eeaa584ddaf45da11.jpg" 
-          alt="Happy Couple" 
-          className="w-[500px] h-[500px] rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl rounded-br-3xl object-cover mb-6" 
-        />
-      </div>
+  return (
+    <div className="container mx-auto px-6 py-12 bg-pink-200" id="welcome">
+      <div className="flex flex-wrap items-center">
+        {/* Image Sliding from Top */}
+        <motion.div
+          ref={imageInViewRef}
+          initial={{ opacity: 0, y: -50 }}
+          animate={imageInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
+          transition={{ duration: 0.9 }}
+          className="flex-1 flex flex-col items-center my-2 justify-center z-0"
+        >
+          <img
+            src="https://i.pinimg.com/736x/4c/00/36/4c00363e9a49f10eeaa584ddaf45da11.jpg"
+            alt="Happy Couple"
+            className="w-full max-w-[600px] h-[500px] rounded-3xl object-cover mb-6" // Ensure responsiveness
+          />
+        </motion.div>
 
-      {/* Text Section */}
-      <div className="w-full md:w-1/2 md:pl-8">
-        <h2 className="text-4xl font-bold mb-4">Welcome To <span className="text-maroon-600">VivahBandh.</span></h2>
-        <p className="mb-4">We connect individuals seeking life partners, ensuring they find their perfect match among millions of verified profiles.</p>
-        <p className="mb-4">Our platform offers a variety of features, including advanced search options, matchmaking algorithms, and personalized recommendations tailored to your preferences.</p>
-        <ul className="space-y-2">
-          {[
-            "Trustworthy and verified profiles",
-            "User-friendly design",
-            "Dedicated support to assist you",
-            "Advanced matching algorithms",
-            "In-depth profiles and preferences"
-          ].map((item, index) => (
-            <li key={index} className="flex items-center text-gray-700">
-              <svg className="w-5 h-5 text-maroon-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              {item}
-            </li>
-          ))}
-        </ul>
+        {/* Text Sliding from Bottom */}
+        <motion.div
+          ref={textInViewRef}
+          initial={{ opacity: 0, y: 50 }}
+          animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="w-full md:w-1/2 md:pl-8"
+        >
+          <h2 className="text-4xl font-bold mb-4">
+            Welcome To <span className="text-maroon-600">VivahBandh.</span>
+          </h2>
+          <p className="mb-4">
+            We connect individuals seeking life partners, ensuring they find their perfect match among millions of verified profiles.
+          </p>
+          <p className="mb-4">
+            Our platform offers a variety of features, including advanced search options, matchmaking algorithms, and personalized recommendations tailored to your preferences.
+          </p>
+          <ul className="space-y-2">
+            {[
+              'Trustworthy and verified profiles',
+              'User-friendly design',
+              'Dedicated support to assist you',
+              'In-depth profiles and preferences',
+            ].map((item, index) => (
+              <li key={index} className="flex items-center text-gray-700">
+                <svg
+                  className="w-5 h-5 text-maroon-600 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
       </div>
     </div>
-  </div>
-);
-
+  );
+};
 
 const AboutUs = () => (
   <div className="container mx-auto px-6 py-16 bg-pink-200" id="about-us">
@@ -209,7 +239,9 @@ const Partners = () => (
   <div className="py-16 bg-pink-200" id="partners">
     <div className="container mx-auto px-6">
       <h2 className="text-4xl font-bold text-center mb-8">Start Looking For Your Partner</h2>
-      <p className="text-center mb-8">Begin your journey of love and companionship with  VivahBandh.</p>
+      <p className="text-center mb-8">
+        Begin your journey of love and companionship with <strong>VivahBandh.</strong>
+      </p>
       <p className="text-center mb-4">
         Explore our vast database of profiles and connect with potential matches that suit your preferences.
         Let love guide you to a fulfilling relationship! We are here to assist you at every step.
@@ -218,12 +250,56 @@ const Partners = () => (
         Our dedicated customer service team is always ready to help you with your queries, ensuring a seamless experience.
         Don't wait any longer; your perfect partner awaits you!
       </p>
+
+      {/* Call-to-Action Section */}
+      <div className="mt-12 text-center">
+        <button className="bg-maroon-600 text-white px-6 py-3 rounded-lg shadow hover:bg-maroon-700 transition duration-200">
+          Join Now
+        </button>
+      </div>
+
+      {/* Testimonials Section */}
+      <h3 className="text-3xl font-bold text-center mt-16 mb-8">What Our Users Say</h3>
+      <div className="grid md:grid-cols-2 gap-8">
+        {[
+          {
+            name: "Aisha",
+            feedback: "VivahBandh helped me find my soulmate! The profiles are genuine and the support team is fantastic.",
+            image: "https://i.pinimg.com/736x/9d/a6/9d/a6babe1acbcfbb62b4457d5c62f3e13e.jpg",
+          },
+          {
+            name: "Rahul",
+            feedback: "I had a great experience using VivahBandh. The matching algorithm is impressive!",
+            image: "https://i.pinimg.com/736x/ae/3a/2b/ae3a2b3ef077ee1c7c3b3db10f8a707e.jpg",
+          },
+          {
+            name: "Meera",
+            feedback: "Thanks to VivahBandh, I met someone who truly understands me. Highly recommend!",
+            image: "https://i.pinimg.com/736x/f1/12/98/f11298c3a03e57c2e2c88f245bf79f4d.jpg",
+          },
+          {
+            name: "Karan",
+            feedback: "The user-friendly interface made my search so much easier. I found my perfect match!",
+            image: "https://i.pinimg.com/736x/64/aa/34/64aa348a43f9274521e21579d1f6b2f3.jpg",
+          },
+        ].map((testimonial, index) => (
+          <div key={index} className="bg-white rounded-lg shadow-lg p-6">
+            <img
+              src={testimonial.image}
+              alt={testimonial.name}
+              className="w-16 h-16 rounded-full mb-4 mx-auto"
+            />
+            <p className="text-gray-700 italic mb-2">"{testimonial.feedback}"</p>
+            <h4 className="font-semibold text-center">{testimonial.name}</h4>
+          </div>
+        ))}
+      </div>
+
     </div>
   </div>
 );
 
 // New Flow Component
-
 const Flow = () => {
   const steps = [
     {
@@ -252,37 +328,37 @@ const Flow = () => {
     }
   ];
 
-  const ref = useRef(null);
-  const isInView = useInView(ref);
-
-  useEffect(() => {
-    if (isInView) {
-      console.log('Component is in view');
-    }
-  }, [isInView]);
+  const [ref, inView] = useInView({
+    threshold: 0.3,
+    triggerOnce: false,
+  });
 
   return (
     <div className="py-16 bg-pink-200" id="flow">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-8">How It Works</h2>
-        <div className="flex flex-col md:flex-row justify-center items-start" ref={ref}>
+        <p className="text-lg text-center mb-8 text-gray-700">
+          At VivahBandh, we simplify the matchmaking process for you. Follow these easy steps to connect with your ideal partner.
+          Each step is designed to ensure a seamless experience while searching for meaningful relationships.
+        </p>
+        <div className="flex flex-col md:flex-row justify-center items-center" ref={ref}>
           {steps.map((step, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className={`shadow-xl rounded-lg p-6 mx-4 my-4 flex flex-col justify-center items-center h-[300px] w-[250px] transition-transform duration-300 ${step.bgColor} hover:scale-105`}
+              className={`shadow-xl rounded-lg p-6 mx-4 my-4 flex flex-col items-center justify-center h-[300px] w-[250px] transition-transform duration-300 ${step.bgColor} hover:scale-105`}
             >
               <motion.div
                 initial={{ scale: 0 }}
-                animate={isInView ? { scale: 1 } : {}}
+                animate={inView ? { scale: 1 } : { scale: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                className="mb-2"
+                className="mb-2 flex items-center justify-center"
               >
                 {step.icon}
               </motion.div>
-              <h3 className="text-xl font-bold mb-2 text-white">{step.title}</h3>
+              <h3 className="text-xl font-bold mb-2 text-white text-center">{step.title}</h3>
               <p className="text-white text-center">{step.description}</p>
             </motion.div>
           ))}
@@ -293,69 +369,97 @@ const Flow = () => {
 };
 
 
-const AnimatedSection = ({ children }) => {
-  const controls = useAnimation();
+const Testimonials = () => {
+  const testimonials = [
+    { quote: "I found my perfect match through VivahBandh!", name: "John Doe" },
+    { quote: "Great experience and support!", name: "Jane Smith" },
+    { quote: "I never thought it could be this easy to find love!", name: "Alice Johnson" },
+    { quote: "VivahBandh helped me connect with someone special!", name: "Mike Wilson" },
+    { quote: "The process was seamless and enjoyable!", name: "Sarah Brown" },
+    { quote: "Highly recommend to anyone looking for love!", name: "David Lee" }
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(1); // Start with the second testimonial
+
+  // Create a ref for the testimonials container
   const [ref, inView] = useInView({
-    triggerOnce: true, // Only trigger once
-    threshold: 0.1, // 10% of the section visible triggers animation
+    threshold: 0.1,
+    triggerOnce: false
   });
 
+  // Effect to change testimonials every 5 seconds
   useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
-  }, [controls, inView]);
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    }, 4000); // Change testimonial every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, [testimonials.length]);
+
+  // Calculate the three indices to display
+  const leftIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+  const rightIndex = (currentIndex + 1) % testimonials.length;
 
   return (
-    <motion.div
-      ref={ref}
-      animate={controls}
-      initial="hidden"
-      transition={{ duration: 0.5 }}
-      variants={{
-        visible: { opacity: 1, y: 0 },
-        hidden: { opacity: 0, y: 50 },
-      }}
-    >
-      {children}
-    </motion.div>
+    <div className="py-16 bg-pink-200" id="testimonials" ref={ref}>
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-4">What Our Users Say</h2>
+        <p className="text-lg text-center mb-8 text-gray-600">
+          Discover how VivahBandh has transformed the lives of our users. Here are some of their stories!
+        </p>
+
+        <div className="flex justify-center items-center mb-6">
+          {/* Left Testimonial */}
+          <motion.div
+            key={leftIndex}
+            initial={{ opacity: 0.5, x: -50 }}
+            animate={inView ? { opacity: 0.5, x: 0 } : { opacity: 0, x: -50 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="bg-pink-300 shadow-md rounded-lg p-6 m-4 flex-grow"
+          >
+            <p className="text-gray-600 italic">"{testimonials[leftIndex].quote}"</p>
+            <p className="mt-4 font-bold">~ {testimonials[leftIndex].name}</p>
+          </motion.div>
+
+          {/* Main Testimonial */}
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 1, scale: 1 }}
+            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="bg-pink-400 shadow-md rounded-lg p-6 m-4 flex-grow"
+          >
+            <p className="text-black font-semibold italic">"{testimonials[currentIndex].quote}"</p>
+            <p className="mt-4 text-white font-bold">~ {testimonials[currentIndex].name}</p>
+          </motion.div>
+
+          {/* Right Testimonial */}
+          <motion.div
+            key={rightIndex}
+            initial={{ opacity: 0.5, x: 50 }}
+            animate={inView ? { opacity: 0.5, x: 0 } : { opacity: 0, x: 50 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="bg-pink-300 shadow-md rounded-lg p-6 m-4 flex-grow"
+          >
+            <p className="text-gray-600 italic">"{testimonials[rightIndex].quote}"</p>
+            <p className="mt-4 font-bold">~ {testimonials[rightIndex].name}</p>
+          </motion.div>
+        </div>
+
+        <p className="text-center text-gray-600 max-w-xl mx-auto">
+          Join the community today and start your journey towards finding love with VivahBandh. Your story could be next!
+        </p>
+      </div>
+    </div>
   );
 };
 
-const Testimonials = () => (
-  <div className="py-16 bg-pink-200" id="testimonials">
-    <div className="container mx-auto px-6">
-      <h2 className="text-4xl font-bold text-center mb-8">Testimonials</h2>
-      <div className="flex flex-wrap justify-center">
-        {[
-          {
-            quote: "I found my perfect match through VivahBandh!",
-            name: "John Doe"
-          },
-          {
-            quote: "Great experience and support!",
-            name: "Jane Smith"
-          },
-          {
-            quote: "I never thought it could be this easy to find love!",
-            name: "Alice Johnson"
-          }
-        ].map((testimonial, index) => (
-          <div key={index} className="bg-white shadow-md rounded-lg p-6 m-4 max-w-sm">
-            <p className="text-gray-600 italic">"{testimonial.quote}"</p>
-            <p className="mt-4 font-bold">{testimonial.name}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
 
 const Contact = () => (
   <div className="py-16 bg-pink-200" id="contact-us">
-    <div className="container mx-auto px-6">
-      <h2 className="text-4xl font-bold text-center mb-8">Contact Us</h2>
-      <div className="max-w-lg mx-auto">
+    <div className="container mx-auto px-6 flex flex-col md:flex-row">
+      <div className="md:w-1/2 max-w-lg mx-auto mb-8 md:mb-0">
+        <h2 className="text-4xl font-bold text-center mb-8">Contact Us</h2>
         <p className="mb-4">Have any questions? We'd love to hear from you!</p>
         <form>
           <div className="mb-4">
@@ -374,6 +478,13 @@ const Contact = () => (
             Send Message
           </button>
         </form>
+      </div>
+      <div className="md:w-1/2">
+        <img
+          src="path/to/your/image.jpg" // Replace with your image path
+          alt="Contact Us"
+          className="w-full h-auto object-cover" // Ensure the image covers the area appropriately
+        />
       </div>
     </div>
   </div>
@@ -401,17 +512,17 @@ const Footer = () => (
     </div>
 
     <div className="relative container mx-auto px-4 md:flex md:justify-between md:text-left text-center space-y-8 md:space-y-0">
-      {/* WP Matrimony Section */}
+      {/* VivahBandh Section */}
       <div className="md:w-1/4">
-        <h2 className="text-3xl font-bold mb-3">WP Matrimony</h2>
+        <h2 className="text-3xl font-bold mb-3">VivahBandh</h2>
         <p className="text-sm mb-4 max-w-xs">
-          WP Matrimony helps you find your perfect soulmate. Join today and start searching for your partner right away.
+          VivahBandh helps you find your perfect soulmate. Join today and start searching for your partner right away.
         </p>
         <div className="flex justify-center md:justify-start space-x-4 mt-4">
-          <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-facebook"></i></a>
-          <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-twitter"></i></a>
-          <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-youtube"></i></a>
-          <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-rss"></i></a>
+          <a href="#" className="text-white text-2xl hover:text-black"><i className="fab fa-facebook"></i></a>
+          <a href="#" className="text-white text-2xl hover:text-black"><i className="fab fa-twitter"></i></a>
+          <a href="#" className="text-white text-2xl hover:text-black"><i className="fab fa-youtube"></i></a>
+          {/* <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-rss"></i></a> */}
         </div>
       </div>
 
@@ -429,9 +540,9 @@ const Footer = () => (
       <div className="md:w-1/4">
         <h3 className="text-lg font-semibold mb-3">Contact Details</h3>
         <ul className="text-sm space-y-2">
-          <li><i className="fas fa-map-marker-alt mr-2"></i> Sunset Lake Road, Suite B-2, Newark, Delaware -19702, USA</li>
-          <li><i className="fas fa-envelope mr-2"></i> presale@wpdating.com</li>
-          <li><i className="fas fa-phone-alt mr-2"></i> +1 217 650 2736</li>
+          <li><i className="fas fa-map-marker-alt mr-2"></i> Solapur, Maharashtra</li>
+          <li><i className="fas fa-envelope mr-2"></i> id_here@gmail.com</li>
+          <li><i className="fas fa-phone-alt mr-2"></i>+910000000000</li>
         </ul>
       </div>
 
@@ -452,7 +563,7 @@ const Footer = () => (
 
     {/* Footer Bottom */}
     <div className="mt-12 border-t border-pink-400 pt-6 text-center text-sm">
-      <p>Copyright © 2024 Relish Dating. All rights reserved.</p>
+      <p>Copyright © 2024 VivahBandh. All rights reserved.</p>
       <div className="flex justify-center space-x-4 mt-2">
         <a href="#" className="hover:underline">FAQ</a>
         <a href="#" className="hover:underline">Privacy Policy</a>

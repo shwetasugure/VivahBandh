@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation,} from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FaUserPlus, FaInfoCircle, FaUserFriends, FaHandshake, } from 'react-icons/fa';
 import image3 from './images/image3-transformed.jpeg';
@@ -223,83 +223,54 @@ const Welcome = () => {
   );
 };
 
-const AboutUs = () => (
-  <div className="container mx-auto px-6 py-16 bg-pink-200" id="about-us">
-    <h2 className="text-4xl font-bold text-center mb-8">About Us</h2>
-    <div className="max-w-3xl mx-auto">
-      <p className="mb-4">VivahBandh is a premier online matrimonial service dedicated to connecting singles with their perfect life partners. With years of experience in the industry, we have successfully matched thousands of couples, creating countless happy marriages.</p>
-      <p className="mb-4">Our mission is to provide a safe, reliable, and user-friendly platform for people to connect, interact, and find their ideal match. We understand the significance of marriage and strive to make your journey of finding a life partner as smooth and enjoyable as possible.</p>
-      <p className="mb-4">At VivahBandh, we value trust, privacy, and authenticity. Our dedicated team works tirelessly to ensure that all profiles are genuine and verified, employing advanced technology and manual screening processes to maintain the quality and integrity of our user base.</p>
-      <p className="mb-4">We offer a variety of features that allow you to filter and search for potential matches based on your unique preferences, ensuring a personalized experience. Join us today and take the first step towards finding your life partner!</p>
-    </div>
-  </div>
-);
 
-const Partners = () => (
-  <div className="py-16 bg-pink-200" id="partners">
-    <div className="container mx-auto px-6">
-      <h2 className="text-4xl font-bold text-center mb-8">Start Looking For Your Partner</h2>
-      <p className="text-center mb-8">
-        Begin your journey of love and companionship with <strong>VivahBandh.</strong>
-      </p>
-      <p className="text-center mb-4">
-        Explore our vast database of profiles and connect with potential matches that suit your preferences.
-        Let love guide you to a fulfilling relationship! We are here to assist you at every step.
-      </p>
-      <p className="text-center mb-4">
-        Our dedicated customer service team is always ready to help you with your queries, ensuring a seamless experience.
-        Don't wait any longer; your perfect partner awaits you!
-      </p>
+const AboutUs = () => {
+  const { ref: imageInViewRef, inView: imageInView } = useInView({ threshold: 0.3 });
+  const { ref: textInViewRef, inView: textInView } = useInView({ threshold: 0.3 });
 
-      {/* Call-to-Action Section */}
-      <div className="mt-12 text-center">
-        <button className="bg-maroon-600 text-white px-6 py-3 rounded-lg shadow hover:bg-maroon-700 transition duration-200">
-          Join Now
-        </button>
+  return (
+    <div className="container mx-auto px-6 py-12 bg-pink-200" id="about-us">
+      <div className="flex flex-wrap items-center">
+        
+        {/* Text Sliding from Bottom */}
+        <motion.div
+          ref={textInViewRef}
+          initial={{ opacity: 0, y: 50 }}
+          animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="w-full md:w-1/2 md:pr-8 pl-9"
+        >
+          <h2 className="text-4xl font-bold mb-4 text-center md:text-left">About Us</h2>
+          <p className="mb-4">
+            Welcome to VivahBandh! We’re here to make your journey of finding the perfect partner a joyful and memorable experience. With years of expertise and thousands of happy couples matched, we’re dedicated to helping you connect with someone truly special.
+          </p>
+          <p className="mb-4">
+            Our mission is simple: to provide a safe, easy, and trustworthy platform where singles can meet, connect, and start their happily-ever-after! With advanced tech and careful profile checks, we ensure that each connection is genuine, giving you peace of mind as you search for the one.
+          </p>
+          <p className="mb-4">
+            VivahBandh is all about creating a personal, exciting experience. So why wait? Join us, and let’s bring a little more love and laughter into your life!
+          </p>
+        </motion.div>
+
+        {/* Image Sliding from Top */}
+        <motion.div
+          ref={imageInViewRef}
+          initial={{ opacity: 0, y: -50 }}
+          animate={imageInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
+          transition={{ duration: 0.9 }}
+          className="flex-1 flex flex-col items-center my-2 justify-center z-0"
+        >
+          <img
+            src="https://knotsbyamp.com/wp-content/blogs.dir/1/files/jayanti-nidhish/PRA1322.JPG" // Replace with actual image path
+            alt="About Us"
+            className="w-full max-w-[600px] h-[500px] rounded-3xl object-cover mb-6" // Ensure responsiveness
+          />
+        </motion.div>
       </div>
-
-      {/* Testimonials Section */}
-      <h3 className="text-3xl font-bold text-center mt-16 mb-8">What Our Users Say</h3>
-      <div className="grid md:grid-cols-2 gap-8">
-        {[
-          {
-            name: "Aisha",
-            feedback: "VivahBandh helped me find my soulmate! The profiles are genuine and the support team is fantastic.",
-            image: "https://i.pinimg.com/736x/9d/a6/9d/a6babe1acbcfbb62b4457d5c62f3e13e.jpg",
-          },
-          {
-            name: "Rahul",
-            feedback: "I had a great experience using VivahBandh. The matching algorithm is impressive!",
-            image: "https://i.pinimg.com/736x/ae/3a/2b/ae3a2b3ef077ee1c7c3b3db10f8a707e.jpg",
-          },
-          {
-            name: "Meera",
-            feedback: "Thanks to VivahBandh, I met someone who truly understands me. Highly recommend!",
-            image: "https://i.pinimg.com/736x/f1/12/98/f11298c3a03e57c2e2c88f245bf79f4d.jpg",
-          },
-          {
-            name: "Karan",
-            feedback: "The user-friendly interface made my search so much easier. I found my perfect match!",
-            image: "https://i.pinimg.com/736x/64/aa/34/64aa348a43f9274521e21579d1f6b2f3.jpg",
-          },
-        ].map((testimonial, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-lg p-6">
-            <img
-              src={testimonial.image}
-              alt={testimonial.name}
-              className="w-16 h-16 rounded-full mb-4 mx-auto"
-            />
-            <p className="text-gray-700 italic mb-2">"{testimonial.feedback}"</p>
-            <h4 className="font-semibold text-center">{testimonial.name}</h4>
-          </div>
-        ))}
-      </div>
-
     </div>
-  </div>
-);
+  );
+};
 
-// New Flow Component
 const Flow = () => {
   const steps = [
     {
@@ -367,6 +338,73 @@ const Flow = () => {
     </div>
   );
 };
+
+const Partners = () => (
+  <div className="py-16 bg-pink-200" id="partners">
+    <div className="container mx-auto px-6">
+      <h2 className="text-4xl font-bold text-center mb-8">Start Looking For Your Partner</h2>
+      <p className="text-center mb-8">
+        Begin your journey of love and companionship with <strong>VivahBandh.</strong>
+      </p>
+      <p className="text-center mb-4">
+        Explore our vast database of profiles and connect with potential matches that suit your preferences.
+        Let love guide you to a fulfilling relationship! We are here to assist you at every step.
+      </p>
+      <p className="text-center mb-4">
+        Our dedicated customer service team is always ready to help you with your queries, ensuring a seamless experience.
+        Don't wait any longer; your perfect partner awaits you!
+      </p>
+
+      {/* Call-to-Action Section */}
+      <div className="mt-12 text-center">
+        <button className="bg-maroon-600 text-white px-6 py-3 rounded-lg shadow hover:bg-maroon-700 transition duration-200">
+          Join Now
+        </button>
+      </div>
+
+      {/* Testimonials Section */}
+      <h3 className="text-3xl font-bold text-center mt-16 mb-8">What Our Users Say</h3>
+      <div className="grid md:grid-cols-2 gap-8">
+        {[
+          {
+            name: "Aisha",
+            feedback: "VivahBandh helped me find my soulmate! The profiles are genuine and the support team is fantastic.",
+            image: "https://i.pinimg.com/736x/9d/a6/9d/a6babe1acbcfbb62b4457d5c62f3e13e.jpg",
+          },
+          {
+            name: "Rahul",
+            feedback: "I had a great experience using VivahBandh. The matching algorithm is impressive!",
+            image: "https://i.pinimg.com/736x/ae/3a/2b/ae3a2b3ef077ee1c7c3b3db10f8a707e.jpg",
+          },
+          {
+            name: "Meera",
+            feedback: "Thanks to VivahBandh, I met someone who truly understands me. Highly recommend!",
+            image: "https://i.pinimg.com/736x/f1/12/98/f11298c3a03e57c2e2c88f245bf79f4d.jpg",
+          },
+          {
+            name: "Karan",
+            feedback: "The user-friendly interface made my search so much easier. I found my perfect match!",
+            image: "https://i.pinimg.com/736x/64/aa/34/64aa348a43f9274521e21579d1f6b2f3.jpg",
+          },
+        ].map((testimonial, index) => (
+          <div key={index} className="bg-white rounded-lg shadow-lg p-6">
+            <img
+              src={testimonial.image}
+              alt={testimonial.name}
+              className="w-16 h-16 rounded-full mb-4 mx-auto"
+            />
+            <p className="text-gray-700 italic mb-2">"{testimonial.feedback}"</p>
+            <h4 className="font-semibold text-center">{testimonial.name}</h4>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+);
+
+// New Flow Component
+
 
 
 const Testimonials = () => {
@@ -453,42 +491,61 @@ const Testimonials = () => {
     </div>
   );
 };
+const Contact = () => {
+  const { ref: formInViewRef, inView: formInView } = useInView({ threshold: 0.3 });
+  const { ref: imageInViewRef, inView: imageInView } = useInView({ threshold: 0.3 });
 
+  return (
+    <div className="py-16 bg-pink-200" id="contact-us">
+      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center">
+        
+        {/* Form Sliding from Left to Right */}
+        <motion.div
+          ref={formInViewRef}
+          initial={{ opacity: 0, x: -50 }}
+          animate={formInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="md:w-1/2 max-w-lg mx-auto mb-8 md:mb-0"
+        >
+          <h2 className="text-4xl font-bold text-center mb-8">Contact Us</h2>
+          <p className="mb-4">Have any questions? We'd love to hear from you!</p>
+          <form>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Name</label>
+              <input type="text" className="border border-gray-300 rounded-md w-full p-2" required />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Email</label>
+              <input type="email" className="border border-gray-300 rounded-md w-full p-2" required />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Message</label>
+              <textarea className="border border-gray-300 rounded-md w-full p-2" rows="4" required></textarea>
+            </div>
+            <button type="submit" className="bg-maroon-600 text-white font-bold px-4 py-2 rounded-md hover:bg-pink-500 transition duration-300">
+              Send Message
+            </button>
+          </form>
+        </motion.div>
 
-const Contact = () => (
-  <div className="py-16 bg-pink-200" id="contact-us">
-    <div className="container mx-auto px-6 flex flex-col md:flex-row">
-      <div className="md:w-1/2 max-w-lg mx-auto mb-8 md:mb-0">
-        <h2 className="text-4xl font-bold text-center mb-8">Contact Us</h2>
-        <p className="mb-4">Have any questions? We'd love to hear from you!</p>
-        <form>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Name</label>
-            <input type="text" className="border border-gray-300 rounded-md w-full p-2" required />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Email</label>
-            <input type="email" className="border border-gray-300 rounded-md w-full p-2" required />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Message</label>
-            <textarea className="border border-gray-300 rounded-md w-full p-2" rows="4" required></textarea>
-          </div>
-          <button type="submit" className="bg-maroon-600 text-white font-bold px-4 py-2 rounded-md hover:bg-pink-500 transition duration-300">
-            Send Message
-          </button>
-        </form>
-      </div>
-      <div className="md:w-1/2">
-        <img
-          src="path/to/your/image.jpg" // Replace with your image path
-          alt="Contact Us"
-          className="w-full h-auto object-cover" // Ensure the image covers the area appropriately
-        />
+        {/* Image Sliding from Right to Left */}
+        <motion.div
+          ref={imageInViewRef}
+          initial={{ opacity: 0, x: 50 }}
+          animate={imageInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+          transition={{ duration: 0.8 }}
+          className="md:w-1/2 flex justify-center"
+        >
+          <img
+            src="https://cdn0.weddingwire.in/article/5050/3_2/960/jpg/40505-marathibride-rohitnagwekar-lead.jpeg" // Replace with your image path
+            alt="Contact Us"
+            className="w-full max-w-xl h-auto object-cover rounded-lg"
+          />
+        </motion.div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Footer = () => (
   <footer className="relative bg-pink-500 text-white pt-24 pb-10 overflow-hidden">
@@ -583,14 +640,12 @@ const App = () => (
   >
     <Navbar />
     <Hero />
-    <HorizontalLine />
     <Welcome />
     <HorizontalLine />
     <AboutUs />
+    <Flow />
     <HorizontalLine />
     <Partners />
-    <HorizontalLine />
-    <Flow />
     <HorizontalLine />
     <Testimonials />
     <HorizontalLine />

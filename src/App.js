@@ -48,7 +48,7 @@ const Navbar = () => {
           {/* Register Button */}
           <div className="hidden md:block">
             <a
-              href="/register"
+              href="https://forms.gle/fyaYY23Sg5N4yWR38"
               className="bg-maroon-600 font-bold text-white px-4 py-2 rounded-full hover:bg-pink-500 transition duration-300 w-auto"
             >
               Register
@@ -59,7 +59,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white focus:outline-none"
+              className="text-white focus:outline-none mr-3"
             >
               <svg
                 className="h-6 w-6 fill-current"
@@ -618,8 +618,8 @@ const Footer = () => (
         <h3 className="text-lg font-semibold mb-3">Contact Details</h3>
         <ul className="text-sm space-y-2">
           <li><i className="fas fa-map-marker-alt mr-2"></i> Solapur, Maharashtra</li>
-          <li><i className="fas fa-envelope mr-2"></i> id_here@gmail.com</li>
-          <li><i className="fas fa-phone-alt mr-2"></i>+910000000000</li>
+          <li><i className="fas fa-envelope mr-2"></i> vivahbandh0@gmail.com</li>
+          <li><i className="fas fa-phone-alt mr-2"></i>+918080441475</li>
         </ul>
       </div>
 

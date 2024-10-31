@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useAnimation,} from 'framer-motion';
+import { motion, useAnimation, } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FaUserPlus, FaInfoCircle, FaUserFriends, FaHandshake, } from 'react-icons/fa';
 import image3 from './images/image3-transformed.jpeg';
@@ -29,12 +29,12 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="text-2xl text-white font-bold">
-            VivahBandh
+            <a href="/" className="hover:underline">VivahBandh</a>
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6">
-            {["home", "about-us", "partners", "flow", "testimonials", "contact-us"].map((label) => (
+            {["home", "about-us", "Guide", "partners", "contact-us"].map((label) => (
               <button
                 key={label}
                 onClick={() => scrollToSection(label)}
@@ -85,7 +85,7 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden bg-gradient-to-r from-maroon-600 to-gray-800 shadow-md bg-opacity-100 p-4 absolute top-full left-0 right-0 z-30">
-            {["home", "about-us", "partners", "flow", "testimonials", "contact-us"].map((label) => (
+            {["home", "about-us", "Guide", "partners", "contact-us"].map((label) => (
               <button
                 key={label}
                 onClick={() => {
@@ -112,50 +112,88 @@ const Navbar = () => {
   );
 };
 
-const Hero = () => (
-  <div className="relative flex items-center min-h-screen bg-pink-200 pt-[64px] md:pt-[64px]" id="home">
-    {/* Image Background */}
-    <div className="absolute inset-0 overflow-hidden">
-      <img
-        src={image3}
-        alt="Indian Wedding Ceremony"
-        className="w-full h-full object-cover" // Ensures the image covers the entire area
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-maroon-600 to-transparent opacity-70"></div>
+const Hero = () => {
+  // Add hooks for detecting when the text is in view
+  const { ref: textInViewRef, inView: textInView } = useInView({ threshold: 0.3 });
 
-      {/* Bottom Wave Shape */}
-      <div className="absolute bottom-0 w-full overflow-hidden leading-[0]">
-        <svg
-          className="relative block w-full h-[80px]"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          fill="#FEE2E2" // Matching the pink background color
+  return (
+    <div className="relative flex items-center min-h-screen bg-pink-200 pt-[64px] md:pt-[64px]" id="home">
+      {/* Image Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src={image3}
+          alt="Indian Wedding Ceremony"
+          className="w-full h-full object-cover" // Ensures the image covers the entire area
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-maroon-600 to-transparent opacity-70"></div>
+
+        {/* Bottom Wave Shape */}
+        <div className="absolute bottom-0 w-full overflow-hidden leading-[0]">
+          <svg
+            className="relative block w-full h-[80px]"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            fill="#FEE2E2" // Matching the pink background color
+          >
+            <path d="M0,0 C600,80 600,80 1200,0 L1200,120 L0,120 Z"></path>
+          </svg>
+        </div>
+      </div>
+
+      {/* Text Content with Left-to-Right Animation */}
+      <div className="relative z-10 max-w-lg text-white mx-auto text-center px-4 md:ml-[150px]">
+        <motion.h3
+          ref={textInViewRef}
+          initial={{ opacity: 0, x: -100 }}
+          animate={textInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+          transition={{ duration: 0.7 }}
+          className="text-2xl md:text-3xl font-bold mb-4"
         >
-          <path d="M0,0 C600,80 600,80 1200,0 L1200,120 L0,120 Z"></path>
-        </svg>
+          Find Your
+        </motion.h3>
+
+        <motion.h1
+          initial={{ opacity: 0, x: -100 }}
+          animate={textInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+          transition={{ duration: 0.9, delay: 0.2 }}
+          className="text-4xl md:text-5xl font-bold mb-4"
+        >
+          Life Partner
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, x: -100 }}
+          animate={textInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-base md:text-lg mb-6"
+        >
+          Join us to find your perfect match, because love knows no boundaries!
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, x: -100 }}
+          animate={textInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-base md:text-lg mb-6"
+        >
+          At VivahBandh, we believe that every individual deserves to find a companion who complements their life.
+        </motion.p>
+
+        <motion.a
+          href="/register"
+          initial={{ opacity: 0, x: -100 }}
+          animate={textInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+          transition={{ duration: 0.9, delay: 0.8 }}
+          className="bg-maroon-600 font-bold text-white px-6 py-3 rounded-full hover:bg-pink-500 transition duration-300"
+        >
+          Get Started
+        </motion.a>
       </div>
     </div>
+  );
+};
 
-    {/* Text Content */}
-    <div className="relative z-10 max-w-lg text-white mx-auto text-center px-4 md:ml-[150px]">
-      <h3 className="text-2xl md:text-3xl font-bold mb-4">Find Your</h3>
-      <h1 className="text-4xl md:text-5xl font-bold mb-4">Life Partner</h1>
-      <p className="text-base md:text-lg mb-6">
-        Join us to find your perfect match, because love knows no boundaries!
-      </p>
-      <p className="text-base md:text-lg mb-6">
-        At VivahBandh, we believe that every individual deserves to find a companion who complements their life.
-      </p>
-      <a
-        href="/register"
-        className="bg-maroon-600 font-bold text-white px-6 py-3 rounded-full hover:bg-pink-500 transition duration-300"
-      >
-        Get Started
-      </a>
-    </div>
-  </div>
-);
 
 const Welcome = () => {
   const { ref: imageInViewRef, inView: imageInView } = useInView({ threshold: 0.3 });
@@ -163,19 +201,19 @@ const Welcome = () => {
 
   return (
     <div className="container mx-auto px-6 py-12 bg-pink-200" id="welcome">
-      <div className="flex flex-wrap items-center">
+      <div className="flex flex-col md:flex-row flex-wrap items-center">
         {/* Image Sliding from Top */}
         <motion.div
           ref={imageInViewRef}
           initial={{ opacity: 0, y: -50 }}
           animate={imageInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
           transition={{ duration: 0.9 }}
-          className="flex-1 flex flex-col items-center my-2 justify-center z-0"
+          className="flex-1 flex justify-center my-4 md:my-2 z-10" // Adjusting for mobile and desktop view
         >
           <img
             src="https://i.pinimg.com/736x/4c/00/36/4c00363e9a49f10eeaa584ddaf45da11.jpg"
             alt="Happy Couple"
-            className="w-full max-w-[600px] h-[500px] rounded-3xl object-cover mb-6" // Ensure responsiveness
+            className="w-full max-w-[400px] md:max-w-[600px] h-auto rounded-3xl object-cover mb-6"
           />
         </motion.div>
 
@@ -185,7 +223,7 @@ const Welcome = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full md:w-1/2 md:pl-8"
+          className="w-full md:w-1/2 md:pl-8 text-center md:text-left" // Centered text on mobile, aligned left on larger screens
         >
           <h2 className="text-4xl font-bold mb-4">
             Welcome To <span className="text-maroon-600">VivahBandh.</span>
@@ -203,7 +241,7 @@ const Welcome = () => {
               'Dedicated support to assist you',
               'In-depth profiles and preferences',
             ].map((item, index) => (
-              <li key={index} className="flex items-center text-gray-700">
+              <li key={index} className="flex items-center justify-center md:justify-start text-gray-700">
                 <svg
                   className="w-5 h-5 text-maroon-600 mr-2"
                   fill="none"
@@ -223,24 +261,22 @@ const Welcome = () => {
   );
 };
 
-
 const AboutUs = () => {
   const { ref: imageInViewRef, inView: imageInView } = useInView({ threshold: 0.3 });
   const { ref: textInViewRef, inView: textInView } = useInView({ threshold: 0.3 });
 
   return (
     <div className="container mx-auto px-6 py-12 bg-pink-200" id="about-us">
-      <div className="flex flex-wrap items-center">
-        
+      <div className="flex flex-col md:flex-row flex-wrap items-center">
         {/* Text Sliding from Bottom */}
         <motion.div
           ref={textInViewRef}
           initial={{ opacity: 0, y: 50 }}
           animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full md:w-1/2 md:pr-8 pl-9"
+          className="w-full md:w-1/2 md:pr-8 text-center md:text-left pl-4 md:pl-9" // Adjusted padding for mobile
         >
-          <h2 className="text-4xl font-bold mb-4 text-center md:text-left">About Us</h2>
+          <h2 className="text-4xl font-bold mb-4">About Us</h2>
           <p className="mb-4">
             Welcome to VivahBandh! We’re here to make your journey of finding the perfect partner a joyful and memorable experience. With years of expertise and thousands of happy couples matched, we’re dedicated to helping you connect with someone truly special.
           </p>
@@ -258,20 +294,19 @@ const AboutUs = () => {
           initial={{ opacity: 0, y: -50 }}
           animate={imageInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
           transition={{ duration: 0.9 }}
-          className="flex-1 flex flex-col items-center my-2 justify-center z-0"
+          className="flex-1 flex justify-center my-4 md:my-2 z-0" // Adjusted for mobile view
         >
           <img
-            src="https://knotsbyamp.com/wp-content/blogs.dir/1/files/jayanti-nidhish/PRA1322.JPG" // Replace with actual image path
+            src="https://knotsbyamp.com/wp-content/blogs.dir/1/files/jayanti-nidhish/PRA1322.JPG"
             alt="About Us"
-            className="w-full max-w-[600px] h-[500px] rounded-3xl object-cover mb-6" // Ensure responsiveness
+            className="w-full max-w-[400px] md:max-w-[600px] h-auto rounded-3xl object-cover mb-6"
           />
         </motion.div>
       </div>
     </div>
   );
 };
-
-const Flow = () => {
+const Guide = () => {
   const steps = [
     {
       title: "Register",
@@ -305,7 +340,7 @@ const Flow = () => {
   });
 
   return (
-    <div className="py-16 bg-pink-200" id="flow">
+    <div className="py-16 bg-pink-200" id="Guide">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-8">How It Works</h2>
         <p className="text-lg text-center mb-8 text-gray-700">
@@ -407,90 +442,75 @@ const Partners = () => (
 
 
 
-const Testimonials = () => {
-  const testimonials = [
-    { quote: "I found my perfect match through VivahBandh!", name: "John Doe" },
-    { quote: "Great experience and support!", name: "Jane Smith" },
-    { quote: "I never thought it could be this easy to find love!", name: "Alice Johnson" },
-    { quote: "VivahBandh helped me connect with someone special!", name: "Mike Wilson" },
-    { quote: "The process was seamless and enjoyable!", name: "Sarah Brown" },
-    { quote: "Highly recommend to anyone looking for love!", name: "David Lee" }
-  ];
+// const Testimonials = () => {
+//   const testimonials = [
+//     { quote: "I found my perfect match through VivahBandh!", name: "John Doe" },
+//     { quote: "Great experience and support!", name: "Jane Smith" },
+//     { quote: "I never thought it could be this easy to find love!", name: "Alice Johnson" },
+//     { quote: "VivahBandh helped me connect with someone special!", name: "Mike Wilson" },
+//     { quote: "The process was seamless and enjoyable!", name: "Sarah Brown" },
+//     { quote: "Highly recommend to anyone looking for love!", name: "David Lee" }
+//   ];
 
-  const [currentIndex, setCurrentIndex] = useState(1); // Start with the second testimonial
+//   const [currentIndex, setCurrentIndex] = useState(0); // Start from the first testimonial
 
-  // Create a ref for the testimonials container
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: false
-  });
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+//     }, 4000); // Change quote every 5 seconds
 
-  // Effect to change testimonials every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 4000); // Change testimonial every 5 seconds
+//     return () => clearInterval(interval);
+//   }, [testimonials.length]);
 
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, [testimonials.length]);
+//   const leftIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+//   const rightIndex = (currentIndex + 1) % testimonials.length;
 
-  // Calculate the three indices to display
-  const leftIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
-  const rightIndex = (currentIndex + 1) % testimonials.length;
+//   return (
+//     <div className="py-16 bg-pink-200" id="testimonials">
+//       <div className="container mx-auto px-6">
+//         <h2 className="text-4xl font-bold text-center mb-4">What Our Users Say</h2>
+//         <p className="text-lg text-center mb-8 text-gray-600">
+//           Discover how VivahBandh has transformed the lives of our users. Here are some of their stories!
+//         </p>
 
-  return (
-    <div className="py-16 bg-pink-200" id="testimonials" ref={ref}>
-      <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-4">What Our Users Say</h2>
-        <p className="text-lg text-center mb-8 text-gray-600">
-          Discover how VivahBandh has transformed the lives of our users. Here are some of their stories!
-        </p>
+//         <div className="flex justify-center items-stretch mb-6 space-x-4 max-w-5xl mx-auto">
+//           {/* Left Testimonial */}
+//           <div
+//             key={leftIndex}
+//             className="bg-pink-300 shadow-md rounded-lg p-6 flex-grow w-1/3 min-w-[250px] flex-shrink-0"
+//           >
+//             <p className="text-gray-600 italic">"{testimonials[leftIndex].quote}"</p>
+//             <p className="mt-4 font-bold">~ {testimonials[leftIndex].name}</p>
+//           </div>
 
-        <div className="flex justify-center items-center mb-6">
-          {/* Left Testimonial */}
-          <motion.div
-            key={leftIndex}
-            initial={{ opacity: 0.5, x: -50 }}
-            animate={inView ? { opacity: 0.5, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="bg-pink-300 shadow-md rounded-lg p-6 m-4 flex-grow"
-          >
-            <p className="text-gray-600 italic">"{testimonials[leftIndex].quote}"</p>
-            <p className="mt-4 font-bold">~ {testimonials[leftIndex].name}</p>
-          </motion.div>
+//           {/* Main Testimonial */}
+//           <div
+//             key={currentIndex}
+//             className="bg-pink-400 shadow-md rounded-lg p-6 flex-grow w-1/3 min-w-[300px] flex-shrink-0"
+//           >
+//             <p className="text-black font-semibold italic">"{testimonials[currentIndex].quote}"</p>
+//             <p className="mt-4 text-white font-bold">~ {testimonials[currentIndex].name}</p>
+//           </div>
 
-          {/* Main Testimonial */}
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 1, scale: 1 }}
-            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="bg-pink-400 shadow-md rounded-lg p-6 m-4 flex-grow"
-          >
-            <p className="text-black font-semibold italic">"{testimonials[currentIndex].quote}"</p>
-            <p className="mt-4 text-white font-bold">~ {testimonials[currentIndex].name}</p>
-          </motion.div>
+//           {/* Right Testimonial */}
+//           <div
+//             key={rightIndex}
+//             className="bg-pink-300 shadow-md rounded-lg p-6 flex-grow w-1/3 min-w-[250px] flex-shrink-0"
+//           >
+//             <p className="text-gray-600 italic">"{testimonials[rightIndex].quote}"</p>
+//             <p className="mt-4 font-bold">~ {testimonials[rightIndex].name}</p>
+//           </div>
+//         </div>
 
-          {/* Right Testimonial */}
-          <motion.div
-            key={rightIndex}
-            initial={{ opacity: 0.5, x: 50 }}
-            animate={inView ? { opacity: 0.5, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="bg-pink-300 shadow-md rounded-lg p-6 m-4 flex-grow"
-          >
-            <p className="text-gray-600 italic">"{testimonials[rightIndex].quote}"</p>
-            <p className="mt-4 font-bold">~ {testimonials[rightIndex].name}</p>
-          </motion.div>
-        </div>
+//         <p className="text-center text-gray-600 max-w-xl mx-auto">
+//           Join the community today and start your journey towards finding love with VivahBandh. Your story could be next!
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
 
-        <p className="text-center text-gray-600 max-w-xl mx-auto">
-          Join the community today and start your journey towards finding love with VivahBandh. Your story could be next!
-        </p>
-      </div>
-    </div>
-  );
-};
+
 const Contact = () => {
   const { ref: formInViewRef, inView: formInView } = useInView({ threshold: 0.3 });
   const { ref: imageInViewRef, inView: imageInView } = useInView({ threshold: 0.3 });
@@ -498,13 +518,13 @@ const Contact = () => {
   return (
     <div className="py-16 bg-pink-200" id="contact-us">
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center">
-        
+
         {/* Form Sliding from Left to Right */}
         <motion.div
           ref={formInViewRef}
           initial={{ opacity: 0, x: -50 }}
           animate={formInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 1, delay: 0.2 }}
           className="md:w-1/2 max-w-lg mx-auto mb-8 md:mb-0"
         >
           <h2 className="text-4xl font-bold text-center mb-8">Contact Us</h2>
@@ -643,12 +663,13 @@ const App = () => (
     <Welcome />
     <HorizontalLine />
     <AboutUs />
-    <Flow />
+    <HorizontalLine />
+    <Guide />
     <HorizontalLine />
     <Partners />
     <HorizontalLine />
-    <Testimonials />
-    <HorizontalLine />
+    {/* <Testimonials />
+    <HorizontalLine /> */}
     <Contact />
     <Footer />
   </motion.div>

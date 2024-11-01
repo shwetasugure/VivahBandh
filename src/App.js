@@ -182,7 +182,7 @@ const Hero = () => {
           At VivahBandh, we believe that every individual deserves to find a companion who complements their life.
         </motion.p>
 
-        <motion.a
+        {/* <motion.a
           href="/register"
           initial={{ opacity: 0, x: -100 }}
           animate={textInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
@@ -190,7 +190,7 @@ const Hero = () => {
           className="bg-maroon-600 font-bold text-white px-6 py-3 rounded-full hover:bg-pink-500 transition duration-300"
         >
           Get Started
-        </motion.a>
+        </motion.a> */}
       </div>
     </div>
   );

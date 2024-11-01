@@ -24,8 +24,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-gradient-to-r from-maroon-600 to-gray-800 shadow-md fixed w-full z-20">
-      <div className="container mx-auto px-4 py-4">
+    <nav className="bg-gradient-to-r from-maroon-600 to-gray-800 shadow-md fixed mx-auto w-full z-30">
+      <div className="container mx-auto px-10 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="text-2xl text-white font-bold">
@@ -49,6 +49,8 @@ const Navbar = () => {
           <div className="hidden md:block">
             <a
               href="https://forms.gle/fyaYY23Sg5N4yWR38"
+              target="_blank" // Opens link in a new tab
+              rel="noopener noreferrer" // Security best practice
               className="bg-maroon-600 font-bold text-white px-4 py-2 rounded-full hover:bg-pink-500 transition duration-300 w-auto"
             >
               Register
@@ -56,13 +58,13 @@ const Navbar = () => {
           </div>
 
           {/* Hamburger Menu Icon for Mobile */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center justify-end pr-4">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white focus:outline-none mr-3"
+              className="text-white focus:outline-none mr-5" // Add margin-right
             >
               <svg
-                className="h-6 w-6 fill-current"
+                className="h-7 w-7 fill-current"
                 viewBox="0 0 24 24"
               >
                 {isOpen ? (
@@ -84,7 +86,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden bg-gradient-to-r from-maroon-600 to-gray-800 shadow-md bg-opacity-100 p-4 absolute top-full left-0 right-0 z-30">
+          <div className="md:hidden bg-gradient-to-r from-maroon-600 to-gray-800 shadow-md bg-opacity-100 p-4 absolute top-full left-0 right-0 z-30 overflow-auto max-h-[calc(100vh-4rem)]">
             {["home", "about-us", "Guide", "partners", "contact-us"].map((label) => (
               <button
                 key={label}
@@ -306,6 +308,7 @@ const AboutUs = () => {
     </div>
   );
 };
+
 const Guide = () => {
   const steps = [
     {
@@ -374,69 +377,144 @@ const Guide = () => {
   );
 };
 
-const Partners = () => (
-  <div className="py-16 bg-pink-200" id="partners">
-    <div className="container mx-auto px-6">
-      <h2 className="text-4xl font-bold text-center mb-8">Start Looking For Your Partner</h2>
-      <p className="text-center mb-8">
-        Begin your journey of love and companionship with <strong>VivahBandh.</strong>
-      </p>
-      <p className="text-center mb-4">
-        Explore our vast database of profiles and connect with potential matches that suit your preferences.
-        Let love guide you to a fulfilling relationship! We are here to assist you at every step.
-      </p>
-      <p className="text-center mb-4">
-        Our dedicated customer service team is always ready to help you with your queries, ensuring a seamless experience.
-        Don't wait any longer; your perfect partner awaits you!
-      </p>
+const Partners = () => {
+  const { ref: textRef, inView: textInView } = useInView({ threshold: 0.2 });
+  const { ref: leftColumnRef, inView: leftColumnInView } = useInView({ threshold: 0.2 });
+  const { ref: rightColumnRef, inView: rightColumnInView } = useInView({ threshold: 0.2 });
 
-      {/* Call-to-Action Section */}
-      <div className="mt-12 text-center">
-        <button className="bg-maroon-600 text-white px-6 py-3 rounded-lg shadow hover:bg-maroon-700 transition duration-200">
-          Join Now
-        </button>
+  return (
+    <div className="py-16 bg-pink-200" id="partners">
+      <div className="container mx-auto px-6 overflow-hidden"> {/* Added overflow-hidden */}
+
+        {/* Title and Description with Smooth Animation */}
+        <motion.h2
+          ref={textRef}
+          initial={{ opacity: 0, y: -20 }}
+          animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-center mb-8"
+        >
+          Start Looking For Your Partner
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-center mb-8"
+        >
+          Begin your journey of love and companionship with <strong>VivahBandh.</strong>
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-center mb-4"
+        >
+          We offer exclusive access to a curated database of profiles featured in the monthly publication{" "}
+          <strong>VivahBandh Masik</strong>, where individuals interested in finding their perfect partner are listed.
+          By subscribing to our masik, you'll get the latest profiles delivered to you, making your search for
+          companionship more efficient.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-center mb-4"
+        >
+          Explore our vast database and connect with potential matches that suit your preferences. Let love guide you to
+          a fulfilling relationship! Our dedicated customer service team is always ready to assist you with any queries
+          to ensure a smooth experience.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-center mb-4"
+        >
+          Don't wait any longer—subscribe to <strong>VivahBandh Masik</strong> and start your journey today. Your
+          perfect partner awaits!
+        </motion.p>
+
+        {/* Call-to-Action Button */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={textInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-12 text-center"
+        >
+          <button
+            className="bg-maroon-600 text-white px-6 py-3 rounded-lg shadow hover:bg-maroon-700 transition duration-200"
+            onClick={() => window.open("https://forms.gle/e5NMp5R4x8rgV41ZA", "_blank")}
+          >
+            Join Now
+          </button>
+        </motion.div>
+
+        {/* Testimonials Section with Smooth Animation */}
+        <h3 className="text-3xl font-bold text-center mt-16 mb-8">What Our Users Say</h3>
+        <div className="grid md:grid-cols-2 gap-8">
+
+          {/* Left Column Sliding in from the Left */}
+          <motion.div
+            ref={leftColumnRef}
+            initial={{ opacity: 0, x: -100 }}
+            animate={leftColumnInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="bg-gray-100 rounded-lg shadow-lg p-6 hover:bg-gray-200 transition duration-300"
+          >
+            <p className="text-gray-700 italic text-lg mb-4 leading-relaxed">
+              "VivahBandh helped me find my soulmate! The profiles are genuine and the support team is fantastic."
+            </p>
+            <h4 className="font-semibold text-center text-xl text-maroon-600">Aisha</h4>
+          </motion.div>
+
+          {/* Right Column Sliding in from the Right */}
+          <motion.div
+            ref={rightColumnRef}
+            initial={{ opacity: 0, x: 100 }}
+            animate={rightColumnInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="bg-gray-100 rounded-lg shadow-lg p-6 hover:bg-gray-200 transition duration-300"
+          >
+            <p className="text-gray-700 italic text-lg mb-4 leading-relaxed">
+              "I had a great experience using VivahBandh. The matching algorithm is impressive!"
+            </p>
+            <h4 className="font-semibold text-center text-xl text-maroon-600">Rahul</h4>
+          </motion.div>
+
+          {/* Additional Testimonials */}
+          <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            animate={leftColumnInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="bg-gray-100 rounded-lg shadow-lg p-6 hover:bg-gray-200 transition duration-300"
+          >
+            <p className="text-gray-700 italic text-lg mb-4 leading-relaxed">
+              "Thanks to VivahBandh, I met someone who truly understands me. Highly recommend!"
+            </p>
+            <h4 className="font-semibold text-center text-xl text-maroon-600">Meera</h4>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={rightColumnInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="bg-gray-100 rounded-lg shadow-lg p-6 hover:bg-gray-200 transition duration-300"
+          >
+            <p className="text-gray-700 italic text-lg mb-4 leading-relaxed">
+              "The user-friendly interface made my search so much easier. I found my perfect match!"
+            </p>
+            <h4 className="font-semibold text-center text-xl text-maroon-600">Karan</h4>
+          </motion.div>
+        </div>
       </div>
-
-      {/* Testimonials Section */}
-      <h3 className="text-3xl font-bold text-center mt-16 mb-8">What Our Users Say</h3>
-      <div className="grid md:grid-cols-2 gap-8">
-        {[
-          {
-            name: "Aisha",
-            feedback: "VivahBandh helped me find my soulmate! The profiles are genuine and the support team is fantastic.",
-            image: "https://i.pinimg.com/736x/9d/a6/9d/a6babe1acbcfbb62b4457d5c62f3e13e.jpg",
-          },
-          {
-            name: "Rahul",
-            feedback: "I had a great experience using VivahBandh. The matching algorithm is impressive!",
-            image: "https://i.pinimg.com/736x/ae/3a/2b/ae3a2b3ef077ee1c7c3b3db10f8a707e.jpg",
-          },
-          {
-            name: "Meera",
-            feedback: "Thanks to VivahBandh, I met someone who truly understands me. Highly recommend!",
-            image: "https://i.pinimg.com/736x/f1/12/98/f11298c3a03e57c2e2c88f245bf79f4d.jpg",
-          },
-          {
-            name: "Karan",
-            feedback: "The user-friendly interface made my search so much easier. I found my perfect match!",
-            image: "https://i.pinimg.com/736x/64/aa/34/64aa348a43f9274521e21579d1f6b2f3.jpg",
-          },
-        ].map((testimonial, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-lg p-6">
-            <img
-              src={testimonial.image}
-              alt={testimonial.name}
-              className="w-16 h-16 rounded-full mb-4 mx-auto"
-            />
-            <p className="text-gray-700 italic mb-2">"{testimonial.feedback}"</p>
-            <h4 className="font-semibold text-center">{testimonial.name}</h4>
-          </div>
-        ))}
-      </div>
-
     </div>
-  </div>
-);
+  );
+};
 
 // New Flow Component
 
@@ -517,13 +595,13 @@ const Contact = () => {
 
   return (
     <div className="py-16 bg-pink-200" id="contact-us">
-      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center">
+      <div className="container mx-auto px-6 flex flex-col md:flex-row items-start">
 
         {/* Form Sliding from Left to Right */}
         <motion.div
           ref={formInViewRef}
-          initial={{ opacity: 0, x: -50 }}
-          animate={formInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+          initial={{ opacity: 0, transform: 'translateX(-50%)' }}
+          animate={formInView ? { opacity: 1, transform: 'translateX(0%)' } : { opacity: 0, transform: 'translateX(-50%)' }}
           transition={{ duration: 1, delay: 0.2 }}
           className="md:w-1/2 max-w-lg mx-auto mb-8 md:mb-0"
         >
@@ -531,16 +609,16 @@ const Contact = () => {
           <p className="mb-4">Have any questions? We'd love to hear from you!</p>
           <form>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Name</label>
-              <input type="text" className="border border-gray-300 rounded-md w-full p-2" required />
+              <label className="block text-gray-700 mb-2" htmlFor="name">Name</label>
+              <input type="text" id="name" className="border border-gray-300 rounded-md w-full p-2" required />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Email</label>
-              <input type="email" className="border border-gray-300 rounded-md w-full p-2" required />
+              <label className="block text-gray-700 mb-2" htmlFor="email">Email</label>
+              <input type="email" id="email" className="border border-gray-300 rounded-md w-full p-2" required />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Message</label>
-              <textarea className="border border-gray-300 rounded-md w-full p-2" rows="4" required></textarea>
+              <label className="block text-gray-700 mb-2" htmlFor="message">Message</label>
+              <textarea id="message" className="border border-gray-300 rounded-md w-full p-2" rows="4" required></textarea>
             </div>
             <button type="submit" className="bg-maroon-600 text-white font-bold px-4 py-2 rounded-md hover:bg-pink-500 transition duration-300">
               Send Message
@@ -566,7 +644,6 @@ const Contact = () => {
     </div>
   );
 };
-
 const Footer = () => (
   <footer className="relative bg-pink-500 text-white pt-24 pb-10 overflow-hidden">
     {/* Curved Background Shape */}
@@ -598,7 +675,7 @@ const Footer = () => (
         <div className="flex justify-center md:justify-start space-x-4 mt-4">
           <a href="#" className="text-white text-2xl hover:text-black"><i className="fab fa-facebook"></i></a>
           <a href="#" className="text-white text-2xl hover:text-black"><i className="fab fa-twitter"></i></a>
-          <a href="#" className="text-white text-2xl hover:text-black"><i className="fab fa-youtube"></i></a>
+          <a href="#" className="text-white text-2xl hover:text-black"><i className="fab fa-instagram"></i></a>
           {/* <a href="#" className="text-white text-2xl hover:text-gray-200"><i className="fab fa-rss"></i></a> */}
         </div>
       </div>
@@ -668,8 +745,6 @@ const App = () => (
     <HorizontalLine />
     <Partners />
     <HorizontalLine />
-    {/* <Testimonials />
-    <HorizontalLine /> */}
     <Contact />
     <Footer />
   </motion.div>

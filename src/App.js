@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.css';
 
 
+
 // Scroll function for smooth scrolling
 const scrollToSection = (sectionId) => {
   const section = document.getElementById(sectionId);
@@ -45,15 +46,21 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Register Button */}
-          <div className="hidden md:block">
+          {/* Register and Get Masika Buttons for Desktop */}
+          <div className="hidden md:flex space-x-4">
             <a
               href="https://forms.gle/fyaYY23Sg5N4yWR38"
-              target="_blank" // Opens link in a new tab
-              rel="noopener noreferrer" // Security best practice
-              className="bg-maroon-600 font-bold text-white px-4 py-2 rounded-full hover:bg-pink-500 transition duration-300 w-auto"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-maroon-600 font-bold text-white px-4 py-2 rounded-full hover:bg-pink-500 transition duration-300"
             >
               Register
+            </a>
+            <a
+              href="https://forms.gle/k93HJE52zeqt5Nkz9"
+              className="bg-maroon-600 font-bold text-white px-4 py-2 rounded-full hover:bg-pink-500 transition duration-300"
+            >
+              Get Masika
             </a>
           </div>
 
@@ -61,7 +68,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center justify-end pr-4">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white focus:outline-none mr-5" // Add margin-right
+              className="text-white focus:outline-none -mr-7"
             >
               <svg
                 className="h-7 w-7 fill-current"
@@ -76,7 +83,7 @@ const Navbar = () => {
                 ) : (
                   <path
                     fillRule="evenodd"
-                    d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2z"
+                    d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2z"
                   />
                 )}
               </svg>
@@ -100,12 +107,20 @@ const Navbar = () => {
               </button>
             ))}
 
-            {/* Mobile Register Button */}
+            {/* Register and Get Masika Buttons for Mobile */}
             <a
-              href="/register"
-              className="block bg-maroon-600 font-bold text-white px-4 py-2 rounded-full hover:bg-pink-500 transition duration-300 text-center w-full mx-auto"
+              href="https://forms.gle/fyaYY23Sg5N4yWR38"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block bg-maroon-600 font-bold text-white px-4 py-2 rounded-full hover:bg-pink-500 transition duration-300 text-center w-full mt-2"
             >
               Register
+            </a>
+            <a
+              href="https://forms.gle/k93HJE52zeqt5Nkz9"
+              className="block bg-maroon-600 font-bold text-white px-4 py-2 rounded-full hover:bg-pink-500 transition duration-300 text-center w-full mt-2"
+            >
+              Get Masika
             </a>
           </div>
         )}
@@ -113,6 +128,7 @@ const Navbar = () => {
     </nav>
   );
 };
+
 
 const Hero = () => {
   // Add hooks for detecting when the text is in view
@@ -215,7 +231,7 @@ const Welcome = () => {
           <img
             src="https://i.pinimg.com/736x/4c/00/36/4c00363e9a49f10eeaa584ddaf45da11.jpg"
             alt="Happy Couple"
-            className="w-full max-w-[400px] md:max-w-[600px] h-auto rounded-3xl object-cover mb-6"
+            className="w-full max-w-[400px] md:max-w-[500px] h-auto rounded-3xl object-cover mb-6"
           />
         </motion.div>
 
@@ -440,17 +456,24 @@ const Partners = () => {
         </motion.p>
 
         {/* Call-to-Action Button */}
-        <motion.div
+          <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={textInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-12 text-center"
+          className="mt-12 text-center flex justify-center space-x-4" // Added flex and space between buttons
         >
           <button
             className="bg-maroon-600 text-white px-6 py-3 rounded-lg shadow hover:bg-maroon-700 transition duration-200"
             onClick={() => window.open("https://forms.gle/e5NMp5R4x8rgV41ZA", "_blank")}
           >
             Join Now
+          </button>
+          
+          <button
+            className="bg-maroon-600 text-white px-6 py-3 rounded-lg shadow hover:bg-maroon-700 transition duration-200"
+            onClick={() => window.open("https://forms.gle/k93HJE52zeqt5Nkz9", "_blank")} // Replace with the actual URL for "Get Masik"
+          >
+            Get Masika
           </button>
         </motion.div>
 
@@ -589,9 +612,39 @@ const Partners = () => {
 // };
 
 
+
 const Contact = () => {
   const { ref: formInViewRef, inView: formInView } = useInView({ threshold: 0.3 });
   const { ref: imageInViewRef, inView: imageInView } = useInView({ threshold: 0.3 });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      message: e.target.message.value,
+    };
+
+    try {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbyoGraCC0VKzlMWRY6g-9HZnZ7M_lYwMYFRte23m0I02RSNm03zHc9qcin7fftd2Q/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(formData),
+      });
+
+      const result = await response.json();
+      if (result.result === "Success") {
+        alert("Message sent successfully!");
+        e.target.reset(); // Clear form after submission
+      }
+    } catch (error) {
+      alert("Error sending message.");
+      console.error(error);
+    }
+  };
 
   return (
     <div className="py-16 bg-pink-200" id="contact-us">
@@ -607,7 +660,7 @@ const Contact = () => {
         >
           <h2 className="text-4xl font-bold text-center mb-8">Contact Us</h2>
           <p className="mb-4">Have any questions? We'd love to hear from you!</p>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2" htmlFor="name">Name</label>
               <input type="text" id="name" className="border border-gray-300 rounded-md w-full p-2" required />
@@ -644,6 +697,7 @@ const Contact = () => {
     </div>
   );
 };
+
 const Footer = () => (
   <footer className="relative bg-pink-500 text-white pt-24 pb-10 overflow-hidden">
     {/* Curved Background Shape */}
